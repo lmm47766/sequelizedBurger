@@ -1,0 +1,85 @@
+<div class="container">
+
+  <div class="row">
+      <div class="col-xl-12 header">
+          <img src="/assets/img/burger.png">
+          <h1>Eat-Da-Burger</h1>
+      </div>  
+  </div>
+
+  <div class="row">
+      <div class="col-xl-6 notDevoured">
+        {{#each notDevoured}}
+            <p>
+              {{this.id}}. {{this.burger_name}}
+              <button data-burgerid="{{this.id}}" class="updateDev">Devour!</button>
+            </p>
+        {{/each}}
+      </div>  
+      <div class="col-xl-6 devoured">
+        <button id="delete" type="submit">Clear All</button>
+        {{#each devoured}}
+            <p>
+              {{this.id}}. {{this.burger_name}}
+            </p>
+        {{/each}}
+      </div>  
+  </div>
+
+  <div class="row">
+      <div class="col-xl-12 add">
+          <form class="button-size">
+            <textarea id="new" type="text" name="plan"></textarea>
+            <br>
+            <button id="addBurger" type="submit">Submit</button>
+            <p>Enter a burger you want to eat. Click submit button to save it.</p>
+          </form>
+      </div>  
+  </div>
+
+
+</div>
+
+<script type="text/javascript">
+  //Add button
+  $("#addBurger").on("click", function(event) {
+    event.preventDefault();
+    var newBurger = {
+      burger: $("#new").val().trim()
+    };
+
+    $.post("/todos", newBurger, function() {
+      location.reload();
+    });
+
+  });
+
+  //Update button
+  $(".updateDev").on("click", function(event) {
+    var id = $(this).data("burgerid");
+
+    $.ajax("/update/" + id, {
+      type: "PUT"
+    }).then(
+      function() {
+        console.log("updated id ", id);
+        location.reload();
+      }
+    );
+  });
+
+  //Delete button
+  $("#delete").on("click", function(event) {
+    // var id = $(this).data("burgerid");
+
+    $.ajax("/delete", {
+      type: "DELETE"
+    }).then(
+      function() {
+        console.log("deleting all ");
+        location.reload();
+      }
+    );
+  });
+
+</script>

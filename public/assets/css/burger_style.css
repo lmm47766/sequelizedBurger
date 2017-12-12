@@ -1,0 +1,23 @@
+.header, .devoured, .add, .notDevoured{
+	text-align:center;
+}
+
+.devoured, .notDevoured{
+	float:left;
+	width: 50%;
+}
+
+#addBurger{
+	background: dodgerblue; 
+	color:white;
+}
+
+body{
+	background: lemonchiffon;
+}
+
+
+img{
+	width:200px;
+	height:200px;
+}
